@@ -3,11 +3,11 @@ import logger from './config/logger'
 import createHttpError, { HttpError } from 'http-errors'
 const app = express()
 
-app.get('/', async (req, res, next) => {
-  const err = createHttpError(401, 'Unauth')
-  next(err)
-  await new Promise(res => res(1))
-  //   res.send('Welcome to Auth service')
+app.get('/', (req, res, next) => {
+  // const err = createHttpError(401, 'Unauth')
+  // next(err)
+  // await new Promise(res => res(1))
+  res.send('Welcome to Auth service')
 })
 
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
