@@ -12,8 +12,13 @@ export class AuthController {
   async register(req: RegisterUserRequest, res: Response) {
     const { firstName, lastName, email, password } = req.body
 
-    await this.userService.create({ firstName, lastName, email, password })
+    const createdUser = await this.userService.create({
+      firstName,
+      lastName,
+      email,
+      password
+    })
 
-    res.status(201).json()
+    res.status(201).json({ id: createdUser.id })
   }
 }
