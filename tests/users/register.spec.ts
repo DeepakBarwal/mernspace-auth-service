@@ -1,7 +1,26 @@
 import request from 'supertest'
 import app from '../../src/app'
+import { User } from '../../src/entity/User'
+import { DataSource } from 'typeorm'
+import { AppDataSource } from '../../src/config/data-source'
+import { truncateTables } from '../utils'
 
 describe('POST /auth/register', () => {
+  let connection: DataSource
+
+  beforeAll(async () => {
+    connection = await AppDataSource.initialize()
+  })
+
+  beforeEach(async () => {
+    // Database truncate
+    await truncateTables(connection)
+  })
+
+  afterAll(async () => {
+    await connection.destroy()
+  })
+
   // happy path
   describe('Given all fields', () => {
     it('should return 201 status code', async () => {
@@ -52,6 +71,9 @@ describe('POST /auth/register', () => {
       const response = await request(app).post('/auth/register').send(userData)
 
       // Assert
+      const userRepository = connection.getRepository(User)
+      const users = await userRepository.find()
+      expect(users).toHaveLength(1)
     })
   })
 
