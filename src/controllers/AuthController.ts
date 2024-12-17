@@ -2,7 +2,6 @@ import { NextFunction, Response } from 'express'
 import { RegisterUserRequest } from '../types'
 import { UserService } from '../services/UserService'
 import { Logger } from 'winston'
-import createHttpError from 'http-errors'
 import { validationResult } from 'express-validator'
 
 export class AuthController {
