@@ -3,7 +3,6 @@ import app from '../../src/app'
 import { User } from '../../src/entity/User'
 import { DataSource } from 'typeorm'
 import { AppDataSource } from '../../src/config/data-source'
-import { truncateTables } from '../utils'
 import { Roles } from '../../src/constants'
 
 describe('POST /auth/register', () => {
@@ -69,7 +68,7 @@ describe('POST /auth/register', () => {
       }
 
       // Act
-      const response = await request(app).post('/auth/register').send(userData)
+      await request(app).post('/auth/register').send(userData)
 
       // Assert
       const userRepository = connection.getRepository(User)
@@ -78,7 +77,6 @@ describe('POST /auth/register', () => {
       expect(users[0].firstName).toBe(userData.firstName)
       expect(users[0].lastName).toBe(userData.lastName)
       expect(users[0].email).toBe(userData.email)
-      expect(users[0].password).toBe(userData.password)
     })
 
     // it.todo('should return an id of the created user')
@@ -111,13 +109,33 @@ describe('POST /auth/register', () => {
       }
 
       // Act
-      const response = await request(app).post('/auth/register').send(userData)
+      await request(app).post('/auth/register').send(userData)
 
       // Assert
       const userRepository = connection.getRepository(User)
       const users = await userRepository.find()
       expect(users[0]).toHaveProperty('role')
       expect(users[0].role).toBe(Roles.CUSTOMER)
+    })
+
+    it('should store the hashed password in the database', async () => {
+      // Arrange
+      const userData = {
+        firstName: 'Deepak',
+        lastName: 'Barwal',
+        email: 'deepak@mern.space',
+        password: 'secret'
+      }
+
+      // Act
+      await request(app).post('/auth/register').send(userData)
+
+      // Assert
+      const userRepository = connection.getRepository(User)
+      const users = await userRepository.find()
+      expect(users[0].password).not.toBe(userData.password)
+      expect(users[0].password).toHaveLength(60)
+      expect(users[0].password).toMatch(/^\$2b\$\d+\$/)
     })
   })
 
