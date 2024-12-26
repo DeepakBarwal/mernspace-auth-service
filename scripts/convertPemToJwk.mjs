@@ -11,3 +11,5 @@ const jwk = rsaPemToJwk(
   },
   'public'
 )
+
+console.log(JSON.stringify(jwk))
