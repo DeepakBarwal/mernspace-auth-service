@@ -12,4 +12,4 @@ const jwk = rsaPemToJwk(
   'public'
 )
 
-console.log(JSON.stringify(jwk))
+console.log(jwk)
