@@ -17,3 +17,8 @@ export interface AuthRequest extends Request {
     role: string
   }
 }
+
+export type AuthCookie = {
+  accessToken: string
+  refreshToken: string
+}
