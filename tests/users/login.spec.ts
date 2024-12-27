@@ -27,9 +27,9 @@ describe('POST /auth/login', () => {
     it('should return the access token and refresh token inside a cookie', async () => {
       // Arrange
       const userData = {
-        firstName: 'Rakesh',
-        lastName: 'K',
-        email: 'rakesh@mern.space',
+        firstName: 'Deepak',
+        lastName: 'Barwal',
+        email: 'deepak@mern.space',
         password: 'password'
       }
 
@@ -70,9 +70,9 @@ describe('POST /auth/login', () => {
     it('should return the 400 if email or password is wrong', async () => {
       // Arrange
       const userData = {
-        firstName: 'Rakesh',
-        lastName: 'K',
-        email: 'rakesh@mern.space',
+        firstName: 'Deepak',
+        lastName: 'Barwal',
+        email: 'deepak@mern.space',
         password: 'password'
       }
 
