@@ -11,7 +11,10 @@
     "lint:fix": "eslint . --fix",
     "prepare": "husky",
     "test:dev": "cross-env NODE_ENV=dev jest --watch --runInBand",
-    "test:test": "cross-env NODE_ENV=test jest --watch --runInBand"
+    "test:test": "cross-env NODE_ENV=test jest --watch --runInBand",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate",
+    "migration:run": "typeorm-ts-node-commonjs migration:run",
+    "migration:create": "typeorm-ts-node-commonjs migration:create"
   },
   "lint-staged": {
     "*.ts": [
