@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm'
 import { User } from '../entity/User'
 import { Config } from './index'
 import { RefreshToken } from '../entity/RefreshToken'
+import { Tenant } from '../entity/Tenant'
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -16,7 +17,7 @@ export const AppDataSource = new DataSource({
   // npm run migration:generate -- .\src\migration\migration -d .\src\config\data-source.ts
   // npm run migration:run -- -d .\src\config\data-source.ts
   logging: false,
-  entities: [User, RefreshToken],
+  entities: ['src/entity/*.ts'],
   migrations: ['src/migration/*.ts'],
   subscribers: []
 })
