@@ -7,6 +7,7 @@ import { UserService } from '../services/UserService'
 import { TokenService } from '../services/TokenService'
 import createHttpError from 'http-errors'
 import { CredentialService } from '../services/CredentialService'
+import { Roles } from '../constants'
 
 export class AuthController {
   constructor(
@@ -39,7 +40,8 @@ export class AuthController {
         firstName,
         lastName,
         email,
-        password
+        password,
+        role: Roles.CUSTOMER
       })
 
       this.logger.info('User has been registered', { id: createdUser.id })
