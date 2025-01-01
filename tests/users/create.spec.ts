@@ -5,6 +5,8 @@ import { AppDataSource } from '../../src/config/data-source'
 import app from '../../src/app'
 import { Roles } from '../../src/constants'
 import { User } from '../../src/entity/User'
+import { Tenant } from '../../src/entity/Tenant'
+import { createTenant } from '../utils'
 
 describe('POST /users', () => {
   let connection: DataSource
@@ -31,6 +33,9 @@ describe('POST /users', () => {
 
   describe('Given all fields', () => {
     it('should persist the user in the database', async () => {
+      // Create tenant first
+      const tenant = await createTenant(connection.getRepository(Tenant))
+
       const adminToken = jwks.token({ sub: '1', role: Roles.ADMIN })
 
       // Register user
@@ -39,7 +44,8 @@ describe('POST /users', () => {
         lastName: 'Barwal',
         email: 'deepak@mern.space',
         password: 'password',
-        tenantId: 1
+        tenantId: tenant.id,
+        role: Roles.MANAGER
       }
 
       const response = await request(app)
@@ -56,6 +62,9 @@ describe('POST /users', () => {
     })
 
     it('should create a manager user', async () => {
+      // Create tenant first
+      const tenant = await createTenant(connection.getRepository(Tenant))
+
       const adminToken = jwks.token({ sub: '1', role: Roles.ADMIN })
 
       // Register user
@@ -64,7 +73,8 @@ describe('POST /users', () => {
         lastName: 'Barwal',
         email: 'deepak@mern.space',
         password: 'password',
-        tenantId: 1
+        tenantId: tenant.id,
+        role: Roles.MANAGER
       }
 
       const response = await request(app)

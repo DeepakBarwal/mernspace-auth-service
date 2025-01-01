@@ -8,7 +8,14 @@ import bcrypt from 'bcrypt'
 export class UserService {
   constructor(private userRepository: Repository<User>) {}
 
-  async create({ firstName, lastName, email, password, role }: UserData) {
+  async create({
+    firstName,
+    lastName,
+    email,
+    password,
+    role,
+    tenantId
+  }: UserData) {
     // check if user already exists with same email
     const user = await this.userRepository.findOne({
       where: { email: email }
@@ -29,7 +36,8 @@ export class UserService {
         lastName,
         email,
         password: hashedPassword,
-        role
+        role,
+        tenantId
       })
       return createdUser
     } catch (error) {
@@ -41,11 +49,12 @@ export class UserService {
     }
   }
 
-  async findByEmail(email: string) {
+  async findByEmailWithPassword(email: string) {
     const user = await this.userRepository.findOne({
       where: {
         email: email
-      }
+      },
+      select: ['id', 'firstName', 'lastName', 'email', 'role', 'password']
     })
     return user
   }
