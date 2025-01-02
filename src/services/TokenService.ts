@@ -1,5 +1,3 @@
-import fs from 'fs'
-import path from 'path'
 import { JwtPayload, sign } from 'jsonwebtoken'
 import createHttpError from 'http-errors'
 import { Config } from '../config'
@@ -8,7 +6,9 @@ import { User } from '../entity/User'
 import { Repository } from 'typeorm'
 
 export class TokenService {
-  constructor(private refreshTokenRepository: Repository<RefreshToken>) {}
+  constructor(
+    private readonly refreshTokenRepository: Repository<RefreshToken>
+  ) {}
 
   generateAccessToken(payload: JwtPayload) {
     let privateKey: string

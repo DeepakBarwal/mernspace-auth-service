@@ -1,6 +1,5 @@
 import { type Request } from 'express'
 import { expressjwt } from 'express-jwt'
-import { Jwt } from 'jsonwebtoken'
 import { Config } from '../config'
 import { AuthCookie, IRefreshTokenPayload } from '../types'
 import { AppDataSource } from '../config/data-source'

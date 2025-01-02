@@ -18,11 +18,11 @@ export const AppDataSource = new DataSource({
   migrations: ['src/migration/*.{ts,js}'],
   subscribers: [],
   ssl: {
-    rejectUnauthorized: false
+    rejectUnauthorized: Config.NODE_ENV !== 'dev'
   },
   extra: {
     ssl: {
-      rejectUnauthorized: false
+      rejectUnauthorized: Config.NODE_ENV !== 'dev'
     }
   }
 })

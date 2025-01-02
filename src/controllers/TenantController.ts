@@ -1,14 +1,14 @@
 import { Request, NextFunction, Response } from 'express'
 import { TenantService } from '../services/TenantService'
-import { CreateTenantRequest, ITenant } from '../types'
+import { CreateTenantRequest } from '../types'
 import { Logger } from 'winston'
 import { validationResult } from 'express-validator'
 import createHttpError from 'http-errors'
 
 export class TenantController {
   constructor(
-    private tenantService: TenantService,
-    private logger: Logger
+    private readonly tenantService: TenantService,
+    private readonly logger: Logger
   ) {}
 
   async create(req: CreateTenantRequest, res: Response, next: NextFunction) {
