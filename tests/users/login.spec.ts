@@ -48,8 +48,8 @@ describe('POST /auth/login', () => {
         .send({ email: userData.email, password: userData.password })
 
       // Assert
-      let accessToken = null
-      let refreshToken = null
+      let accessToken: string = ''
+      let refreshToken: string = ''
       const cookies = (response.headers['set-cookie'] || []) as string[]
       cookies.forEach(cookie => {
         if (cookie.startsWith('accessToken=')) {
@@ -91,7 +91,6 @@ describe('POST /auth/login', () => {
         .send({ email: userData.email, password: 'wrongPassword' })
 
       // Assert
-
       expect(response.statusCode).toBe(400)
     })
   })
