@@ -1,15 +1,14 @@
 import { Request, Response, NextFunction } from 'express'
 import { UserService } from '../services/UserService'
 import { CreateUserRequest, UpdateUserRequest } from '../types'
-import { Roles } from '../constants'
 import { Logger } from 'winston'
 import { validationResult } from 'express-validator'
 import createHttpError from 'http-errors'
 
 export class UserController {
   constructor(
-    private userService: UserService,
-    private logger: Logger
+    private readonly userService: UserService,
+    private readonly logger: Logger
   ) {}
 
   async create(req: CreateUserRequest, res: Response, next: NextFunction) {
