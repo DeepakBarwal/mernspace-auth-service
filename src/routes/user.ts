@@ -10,6 +10,7 @@ import { User } from '../entity/User'
 import updateUserValidator from '../validators/update-user-validator'
 import { UpdateUserRequest } from '../types'
 import logger from '../config/logger'
+import listUsersVaidator from '../validators/list-users-vaidator'
 
 const router = express.Router()
 
@@ -35,8 +36,13 @@ router.patch(
     userController.update(req, res, next)
 )
 
-router.get('/', authenticate, canAccess([Roles.ADMIN]), (req, res, next) =>
-  userController.getAll(req, res, next)
+router.get(
+  '/',
+  authenticate,
+  canAccess([Roles.ADMIN]),
+  listUsersVaidator,
+  (req: Request, res: Response, next: NextFunction) =>
+    userController.getAll(req, res, next)
 )
 
 router.get('/:id', authenticate, canAccess([Roles.ADMIN]), (req, res, next) =>
