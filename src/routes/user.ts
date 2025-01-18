@@ -10,7 +10,7 @@ import { User } from '../entity/User'
 import updateUserValidator from '../validators/update-user-validator'
 import { UpdateUserRequest } from '../types'
 import logger from '../config/logger'
-import listUsersVaidator from '../validators/list-users-vaidator'
+import listUsersVaidator from '../validators/list-users-validator'
 
 const router = express.Router()
 
