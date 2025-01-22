@@ -1,9 +1,7 @@
 import 'reflect-metadata'
 
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 import cookieParser from 'cookie-parser'
-import logger from './config/logger'
-import { HttpError } from 'http-errors'
 import authRouter from './routes/auth'
 import tenantRouter from './routes/tenant'
 import userRouter from './routes/user'
@@ -23,9 +21,6 @@ app.use(cookieParser())
 app.use(express.json())
 
 app.get('/', (req, res, next) => {
-  // const err = createHttpError(401, 'Unauth')
-  // next(err)
-  // await new Promise(res => res(1))
   res.send('Welcome to Auth service')
 })
 
