@@ -12,6 +12,13 @@ export class UserController {
   ) {}
 
   async create(req: CreateUserRequest, res: Response, next: NextFunction) {
+    const result = validationResult(req)
+
+    // Validation
+    if (!result.isEmpty()) {
+      return next(createHttpError(400, result.array()[0].msg as string))
+    }
+
     const { firstName, lastName, email, password, tenantId, role } = req.body
     try {
       const user = await this.userService.create({
@@ -32,11 +39,11 @@ export class UserController {
     // In our project: We are not allowing user to change the email id since it is used as username
     // In our project: We are not allowing admin user to change others password
 
-    // Validation
     const result = validationResult(req)
+
+    // Validation
     if (!result.isEmpty()) {
-      res.status(400).json({ errors: result.array() })
-      return
+      return next(createHttpError(400, result.array()[0].msg as string))
     }
 
     const { firstName, lastName, role, email, tenantId } = req.body

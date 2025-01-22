@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express'
 import authenticate from '../middlewares/authenticate'
 import { canAccess } from '../middlewares/canAccess'
 import { Roles } from '../constants'
-import tenantValidator from '../validators/tenant-validator'
+import createUserValidator from '../validators/create-user-validator'
 import { UserController } from '../controllers/UserController'
 import { UserService } from '../services/UserService'
 import { AppDataSource } from '../config/data-source'
@@ -22,7 +22,7 @@ router.post(
   '/',
   authenticate,
   canAccess([Roles.ADMIN]),
-  tenantValidator,
+  createUserValidator,
   (req: Request, res: Response, next: NextFunction) =>
     userController.create(req, res, next)
 )
