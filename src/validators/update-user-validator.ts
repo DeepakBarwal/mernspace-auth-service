@@ -1,4 +1,5 @@
 import { checkSchema } from 'express-validator'
+import { LimitedUserData } from '../types'
 
 export default checkSchema({
   firstName: {
@@ -26,7 +27,16 @@ export default checkSchema({
   },
   tenantId: {
     errorMessage: 'Tenant id is required!',
-    notEmpty: true,
-    trim: true
+    trim: true,
+    custom: {
+      options: (value: string, { req }) => {
+        const role = (req.body as LimitedUserData)?.role
+        if (role === 'admin') {
+          return true
+        } else {
+          return !!value
+        }
+      }
+    }
   }
 })
